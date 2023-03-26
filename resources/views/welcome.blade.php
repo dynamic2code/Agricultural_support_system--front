@@ -43,6 +43,9 @@
                 <label for="location">Location:</label>
                 <input type="text" id="location" name="location"><br>
 
+                <label for="land_size">Land size:</label>
+                <input type="number" id="land_size" name="land_size"><br>
+
                 <label for="phone">Phone Number:</label>
                 <input type="tel" id="phone" name="phone"><br>
 
