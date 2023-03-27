@@ -8,7 +8,8 @@
 
         <style>
             .container {
-            height: 100vh; /* set height to full viewport height */
+            /* height: 100vh; set height to full viewport height */
+            height: auto;
             display: flex; /* use flexbox layout */
             justify-content: center; /* center horizontally */
             align-items: center; /* center vertically */
@@ -36,27 +37,49 @@
     </head>
     <body class="body">
         <div class="container">
-            <form>
+            <form  method="POST" action="{{ route('sign_up') }}">
+            @csrf
+            <h2>sign-up</h2>
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name"><br>
+                <input type="text" id="name" name="name">
+                <br>
+                <br>
 
                 <label for="location">Location:</label>
-                <input type="text" id="location" name="location"><br>
+                <input type="text" id="location" name="location">
+                <br>
+                <br>
 
-                <label for="land_size">Land size:</label>
-                <input type="number" id="land_size" name="land_size"><br>
+                <label for="land_size">Land size (in acers):</label>
+                <input type="number" id="land_size" name="land_size">
+                <br>
+                <br>
 
                 <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone"><br>
+                <input type="tel" id="phone" name="phone">
+                <br>
+                <br>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email"><br>
+                <input type="email" id="email" name="email">
+                <br>
+                <br>
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password"><br>
+                <input type="password" id="password" name="password">
+                <br>
+                <br>
 
                 <input type="submit" value="Submit">
             </form>
+            
         </div>
+        <h5>you have an account? <button>log-in</button></h5>
+
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
     </body>
 </html>
