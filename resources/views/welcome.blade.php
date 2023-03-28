@@ -56,7 +56,7 @@
                 <br>
 
                 <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone">
+                <input type="tel" id="phone" name="phone_number">
                 <br>
                 <br>
 

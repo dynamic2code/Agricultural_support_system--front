@@ -20,7 +20,7 @@ class MainController extends Controller
         $name = $request->input('name');
         $location = $request->input('location');
         $land_size = $request->input('land_size');
-        $phone_number = $request->input('phone');
+        $phone_number = $request->input('phone_number');
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -30,11 +30,13 @@ class MainController extends Controller
             'land_size' => $land_size,
             'phone_number' => $phone_number,
             'email' => $email,
-            'hashedPassword' => Hash::make($password) 
+            'hashedPassword' => Hash::make($password),
+            'crop' => ''
         ];
 
-        $famrmodel = new Farmer();
-        $famrmodel->sign_up($famerData);
+        $farmerModel = new Farmer();
+        //$farmerModel->sign_up($famerData);
+        $farmerModel->create($famerData);
 
         return redirect()->route('main')->with('success', 'Form submitted successfully.');
     }
