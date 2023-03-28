@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[MainController::class, 'index'])->name('index');
 Route::get('/Home',[MainController::class, 'main'])->name('main');
 Route::post('sign_up', [MainController::class, 'sign_up'])->name('sign_up');
+Route::post('/run-python-script', function (Request $request) {
+    $data = $request->input('data');
+    $output = Artisan::call('run:python-script', ['data' => $data]);
+    return response()->json(['message' => 'Python script executed.', 'output' => $output]);
+});
 

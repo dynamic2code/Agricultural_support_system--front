@@ -8,14 +8,22 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function index(){
+    function index(){
         return view('welcome');
     }
-    public function main(){
+    function main(){
         return view('main');
     }
 
-    public function sign_up(Request $request){
+    function handle($location){
+        $filePath = '/home/grrhrwh/PycharmProjects/pythonProject1/main.py';
+        $command = "python {$filePath} {$location}";
+        exec($command, $output);
+        $response = implode("\n", $output);
+        return $response;
+    }
+
+    function sign_up(Request $request){
         
         $name = $request->input('name');
         $location = $request->input('location');
@@ -38,6 +46,9 @@ class MainController extends Controller
         //$farmerModel->sign_up($famerData);
         $farmerModel->create($famerData);
 
+        $this->handle($location);
+
         return redirect()->route('main')->with('success', 'Form submitted successfully.');
     }
+
 }
