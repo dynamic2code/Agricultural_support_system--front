@@ -23,8 +23,8 @@ Route::get('/',[MainController::class, 'index'])->name('index');
 Route::get('/Home',[MainController::class, 'main'])->name('main');
 Route::post('sign_up', [MainController::class, 'sign_up'])->name('sign_up');
 Route::post('/run-python-script', function (Request $request) {
-    $data = $request->input('data');
-    $output = Artisan::call('run:python-script', ['data' => $data]);
+    $famerData = $request->input('famerData');
+    $output = Artisan::call('run:python-script', ['famerData' => $famerData]);
     return response()->json(['message' => 'Python script executed.', 'output' => $output]);
 });
 

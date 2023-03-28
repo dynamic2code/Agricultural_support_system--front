@@ -15,9 +15,9 @@ class MainController extends Controller
         return view('main');
     }
 
-    function handle($location){
+    function handle($famerData){
         $filePath = '/home/grrhrwh/PycharmProjects/pythonProject1/main.py';
-        $command = "python {$filePath} {$location}";
+        $command = "python {$filePath} {$famerData}";
         exec($command, $output);
         $response = implode("\n", $output);
         return $response;
@@ -46,7 +46,7 @@ class MainController extends Controller
         //$farmerModel->sign_up($famerData);
         $farmerModel->create($famerData);
 
-        $this->handle($location);
+        $this->handle($famerData);
 
         return redirect()->route('main')->with('success', 'Form submitted successfully.');
     }
