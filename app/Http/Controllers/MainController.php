@@ -46,9 +46,13 @@ class MainController extends Controller
         //$farmerModel->sign_up($famerData);
         $farmerModel->create($famerData);
 
-        $this->handle($famerData);
+        $to_model = $this->handle($famerData);
 
-        return redirect()->route('main')->with('success', 'Form submitted successfully.');
+        if($to_model){
+            return redirect()->route('main')->with('success', 'Form submitted successfully.');
+        }else{
+            return redirect()->back()->with('success', 'Form submitted successfully.');
+        }
     }
 
 }
