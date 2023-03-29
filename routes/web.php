@@ -22,9 +22,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[MainController::class, 'index'])->name('index');
 Route::get('/Home',[MainController::class, 'main'])->name('main');
 Route::post('sign_up', [MainController::class, 'sign_up'])->name('sign_up');
-Route::post('/run-python-script', function (Request $request) {
-    $famerData = $request->input('famerData');
-    $output = Artisan::call('run:python-script', ['famerData' => $famerData]);
-    return response()->json(['message' => 'Python script executed.', 'output' => $output]);
-});
+Route::post('handle',[MainController::class, 'handle'])->name('handle');
 

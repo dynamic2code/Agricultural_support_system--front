@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Farmer;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -15,12 +16,26 @@ class MainController extends Controller
         return view('main');
     }
 
+    // sends data to the flask app containing the model
     function handle($famerData){
-        $filePath = '/home/grrhrwh/PycharmProjects/pythonProject1/main.py';
-        $command = "python {$filePath} {$famerData}";
-        exec($command, $output);
-        $response = implode("\n", $output);
-        return $response;
+            // Convert the data to JSON
+            $jsonData = json_encode($famerData);
+
+            // Send a POST request to the Flask app
+            $client = new Client();
+            $response = $client->post('http://localhost:5000/process-data', [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'body' => $jsonData,
+            ]);
+
+            // Get the response status code
+            $statusCode = $response->getStatusCode();
+
+            // Return a response to the client
+            return response()->json(['message' => 'Data sent to Flask app.']);
+        
     }
 
     function sign_up(Request $request){
@@ -42,17 +57,27 @@ class MainController extends Controller
             'crop' => ''
         ];
 
-        $farmerModel = new Farmer();
-        //$farmerModel->sign_up($famerData);
-        $farmerModel->create($famerData);
-
         $to_model = $this->handle($famerData);
 
+
         if($to_model){
+            $farmerModel = new Farmer();
+            //$farmerModel->sign_up($famerData);
+            $farmerModel->create($famerData);
+
             return redirect()->route('main')->with('success', 'Form submitted successfully.');
-        }else{
-            return redirect()->back()->with('success', 'Form submitted successfully.');
         }
+        
+
+        // if($to_model){
+        //     $farmerModel = new Farmer();
+        //     //$farmerModel->sign_up($famerData);
+        //     $farmerModel->create($famerData);
+
+        //     return redirect()->route('main')->with('success', 'Form submitted successfully.');
+        // }else{
+        //     return redirect()->back()->with('fail', 'Form not submitted.');
+        // }
     }
 
 }
